@@ -4,52 +4,87 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" class="prism-dark" disabled />
 
 <main>
-    <article class="post-content">
-        <header class="post-header">
-            <h1 class="post-title">{{ post.title }}</h1>
-            {% if post.image %}
-            <div class="post-image">
-                <img src="../images/{{ post.image }}" alt="{{ post.title }}">
-            </div>
-            {% endif %}
-            <div class="post-meta">
-                <span class="post-date">Published on: {{ post.date.strftime('%Y-%m-%d') }}</span>
-                <span class="post-categories">Categories: 
-                    {% for category in post.categories %}
-                    <a href="../{{ generate_category_url(category) }}">{{ category }}</a>{% if not loop.last %}, {% endif %}
+    <div class="content-wrapper">
+        <article class="post-content">
+            <header class="post-header">
+                <h1 class="post-title">{{ post.title }}</h1>
+                {% if post.image %}
+                <div class="post-image">
+                    <img src="{{ SITE_URL }}/images/{{ post.image }}" alt="{{ post.title }}">
+                </div>
+                {% endif %}
+                <div class="post-meta">
+                    <span class="post-date">Published on: {{ post.date.strftime('%Y-%m-%d') }}</span>
+                    <span class="post-categories">Categories:
+                        {% for category in post.categories %}
+                        <a href="{{ SITE_URL }}/{{ generate_category_url(category) }}">{{ category }}</a>{% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    </span>
+                </div>
+                <div class="post-tags">
+                    <span>Tags:</span>
+                    {% for tag in post.tags %}
+                    <a href="{{ SITE_URL }}/{{ generate_tag_url(tag) }}" class="tag-link">{{ tag }}</a>{% if not loop.last %}, {% endif %}
                     {% endfor %}
-                </span>
-            </div>
-            <div class="post-tags">
-                Tags: {% for tag in post.tags %}
-                <a href="../{{ generate_tag_url(tag) }}" class="tag-link">{{ tag }}</a>{% if not loop.last %}, {% endif %}
-                {% endfor %}
-            </div>
-        </header>
-        
-        {{ post.content | safe }}
-         <!-- Previous/Next Navigation -->
-        {% set prev_post = None %}
-        {% set next_post = None %}
+                </div>
+            </header>
 
-        {% for p in posts %}
-            {% if p.date < post.date and (prev_post is none or p.date > prev_post.date) and post.categories[0] == p.categories[0] %}
-                {% set prev_post = p %}
-            {% endif %}
-             {% if p.date > post.date and (next_post is none or p.date < next_post.date) and post.categories[0] == p.categories[0] %}
-                 {% set next_post = p %}
-            {% endif %}
-        {% endfor %}
+            <div class="post-body">
+                {{ post.content | safe }}
+            </div>
 
-        <nav class="post-navigation">
-            {% if prev_post %}
-                <a href="../{{ generate_post_url(prev_post) }}">« Previous: {{ prev_post.title }}</a>
-            {% endif %}
-            {% if next_post %}
-                <a href="../{{ generate_post_url(next_post) }}">Next: {{ next_post.title }} »</a>
-            {% endif %}
-        </nav>
-    </article>
+             <!-- Previous/Next Navigation -->
+            {% set prev_post = None %}
+            {% set next_post = None %}
+
+            {% for p in posts %}
+                {% if p.date < post.date and (prev_post is none or p.date > prev_post.date) and post.categories[0] == p.categories[0] %}
+                    {% set prev_post = p %}
+                {% endif %}
+                 {% if p.date > post.date and (next_post is none or p.date < next_post.date) and post.categories[0] == p.categories[0] %}
+                     {% set next_post = p %}
+                {% endif %}
+            {% endfor %}
+
+            <nav class="post-navigation">
+                {% if prev_post %}
+                    <a href="{{ SITE_URL }}/{{ generate_post_url(prev_post) }}">« Previous: {{ prev_post.title }}</a>
+                {% endif %}
+                {% if next_post %}
+                    <a href="{{ SITE_URL }}/{{ generate_post_url(next_post) }}">Next: {{ next_post.title }} »</a>
+                {% endif %}
+            </nav>
+        </article>
+    </div>
+
+    <aside>  <!-- Sidebar added here -->
+        <section class="recent-posts">
+            <h3>Recent Posts</h3>
+            <ul>
+            {% for post in recent_posts %}
+               <li><a href="{{ SITE_URL }}/{{ generate_post_url(post) }}">{{ post.title }}</a></li>
+            {% endfor %}
+           </ul>
+        </section>
+
+        <section class="categories">
+            <h3>Categories</h3>
+            <ul>
+            {% for category, posts in categories %}
+              <li><a href="{{ SITE_URL }}/{{ generate_category_url(category) }}">{{ category }} ({{ posts|length }})</a></li>
+            {% endfor %}
+            </ul>
+        </section>
+
+        <section class="tags">
+            <h3>Tags</h3>
+             <div class="tag-grid">
+            {% for tag, posts in tags %}
+               <a href="{{ SITE_URL }}/{{ generate_tag_url(tag) }}" class="tag-item">{{ tag }} <span class="tag-count">{{posts|length}}</span></a>
+            {% endfor %}
+             </div>
+        </section>
+    </aside>
 </main>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
@@ -61,10 +96,10 @@
         const isDark = document.body.classList.contains('dark-theme');
         document.querySelector('.prism-dark').disabled = !isDark;
     }
-    
+
     // Initial theme setup
     updatePrismTheme();
-    
+
     // Watch for theme changes
     const observer = new MutationObserver(function(mutations) {
         mutations.forEach(function(mutation) {
@@ -73,7 +108,7 @@
             }
         });
     });
-    
+
     observer.observe(document.body, {
         attributes: true
     });
