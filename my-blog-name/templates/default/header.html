@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ blog_title }}</title>
-    <link rel="stylesheet" href="{% if post %}../{% else %}./{% endif %}static/css/style.css">
+    <link rel="stylesheet" href="{{ SITE_URL }}/static/css/style.css">
     <!-- Open Graph Meta Tags -->
     {% if post %}
         <meta property="og:title" content="{{ post.title }}">
         <meta property="og:description" content="{{ post.description }}">
-        <meta property="og:image" content="{% if post %}../{% else %}./{% endif %}images/{{post.image}}">
-        <meta property="og:url" content="{% if post %}../{% else %}./{% endif %}{{ post.filepath|replace('.md', '.html') }}">
+        <meta property="og:image" content="{{ SITE_URL }}/images/{{post.image}}">
+        <meta property="og:url" content="{{ SITE_URL }}/{{ generate_post_url(post) }}">
         <meta property="og:type" content="article">
      {% else %}
         <meta property="og:title" content="{{ blog_title }}">
@@ -21,7 +21,7 @@
     {% if post and post.keywords %}
        <meta name="keywords" content="{{ post.keywords|join(', ') }}">
     {% endif %}
-   
+
     <!-- Schema.org Markup -->
     {% if post %}
     <script type="application/ld+json">
@@ -30,17 +30,16 @@
       "@type": "BlogPosting",
       "headline": "{{ post.title }}",
       "description": "{{ post.description }}",
-      "image": "{% if post %}../{% else %}./{% endif %}images/{{ post.image }}",
+      "image": "{{ SITE_URL }}/images/{{ post.image }}",
       "author": {
         "@type": "Person",
         "name": "{{ post.author }}"
       },
       "datePublished": "{{ post.date.isoformat() }}",
-      "mainEntityOfPage": {
+       "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "{% if post %}../{% else %}./{% endif %}{{ generate_post_url(post) }}"
+            "@id": "{{ SITE_URL }}/{{ generate_post_url(post) }}"
         }
-
     }
     </script>
     {% else %}
@@ -49,17 +48,17 @@
       "@context": "https://schema.org",
       "@type": "WebSite",
       "name": "{{ blog_title }}",
-      "url": "./"
+      "url": "{{ SITE_URL }}/"
     }
     </script>
     {% endif %}
 </head>
 <body>
     <header>
-        <h1><a href="./">{{ blog_title }}</a></h1>
+        <h1><a href="{{ SITE_URL }}/">{{ blog_title }}</a></h1>
         <nav>
             <ul>
-                <li><a href="./">Home</a></li>
+                <li><a href="{{ SITE_URL }}/">Home</a></li>
                 <!--  Add more navigation links as needed  -->
             </ul>
         </nav>
