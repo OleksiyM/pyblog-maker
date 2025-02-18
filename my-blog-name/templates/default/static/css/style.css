@@ -1,59 +1,99 @@
-/* Basic Reset */
+/* style.css */
+
+/* --- Reset --- */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* --- General --- */
+:root {
+    /* Light Theme Variables */
+    --bg-color: #ffffff;
+    --text-color: #2c3e50;
+    --link-color: #3498db;
+    --link-hover-color: #2980b9;
+    --border-color: #eaeaea;
+    --button-bg-color: #2c3e50;
+    --button-text-color: #ffffff;
+    --button-hover-bg-color: #34495e;
+    --aside-bg-color: #f8f8f8;
+     /* Tag Styles */
+    --tag-bg-color: #f0f0f0;
+    --tag-text-color: #2c3e50;
+    --tag-hover-bg-color: #e0e0e0;
+    --tag-count-bg-color: #ddd;
+    --tag-count-text-color: #333;
+    /* Code Highlighting */
+    --pre-bg-color: #f0f0f0;
+    --pre-text-color: #333;
+     /* Post-Specific Styles */
+    --post-title-color: var(--text-color); /* Use main text color */
+    --post-meta-color: #7f8c8d;
+    --post-body-text-color: var(--text-color);
+    --post-body-link-color: var(--link-color);
+    --post-body-link-hover-color: var(--link-hover-color);
+}
+
+body.dark-theme {
+    /* Dark Theme Variables */
+    --bg-color: #282c34;
+    --text-color: #ffffff;
+    --link-color: #90caf9;
+    --link-hover-color: #64b5f6;
+    --border-color: #555555;
+    --button-bg-color: #ffffff;
+    --button-text-color: #282c34;
+    --button-hover-bg-color: #e0e0e0;
+    --aside-bg-color: #383f4a;
+     /* Tag Styles */
+    --tag-bg-color: #555;
+    --tag-text-color: #fff;
+    --tag-hover-bg-color: #666;
+    --tag-count-bg-color: #fff;
+    --tag-count-text-color: #333;
+       /* Code Highlighting */
+    --pre-bg-color: #282a36;
+    --pre-text-color: #f8f8f2;
+
+     /* Post-Specific Styles (Dark) */
+    --post-title-color: var(--text-color);  /* Use main text color */
+    --post-meta-color: #999; /* Slightly lighter gray for meta */
+    --post-body-text-color: var(--text-color);
+    --post-body-link-color: var(--link-color);
+    --post-body-link-hover-color: var(--link-hover-color);
+
+}
+
+
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     line-height: 1.8;
-    background-color: #ffffff;
-    color: #2c3e50;
+    background-color: var(--bg-color);
+    color: var(--text-color);
     padding: 0;
     margin: 0;
 }
 
-/* Image Styles */
-.post-image {
-    margin-bottom: 20px;
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-.post-image img {
-    width: 100%;
-    height: auto;
-    display: block;
-    object-fit: cover;
-    max-height: 400px;
-}
-
-.post-content img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: 20px auto;
-    border-radius: 8px;
-}
-
-/* Rest of the existing styles */
+/* --- Header --- */
 header {
-    background: #ffffff;
-    color: #2c3e50;
+    background: var(--bg-color);
+    color: var(--text-color);
     padding: 2rem 0;
     text-align: center;
     margin-bottom: 40px;
-    border-bottom: 1px solid #eaeaea;
+    border-bottom: 1px solid var(--border-color);
 }
 
 header h1 a {
-    color: #2c3e50;
+    color: var(--text-color);
     text-decoration: none;
     font-size: 2.5rem;
     font-weight: 700;
 }
 
+/* --- Navigation --- */
 nav ul {
     list-style: none;
     padding: 0;
@@ -65,30 +105,41 @@ nav ul li {
 }
 
 nav ul li a {
-    color: #2c3e50;
+    color: var(--text-color);
     text-decoration: none;
     font-weight: 500;
     transition: color 0.3s ease;
 }
 
 nav ul li a:hover {
-    color: #3498db;
+    color: var(--link-hover-color);
 }
 
+/* --- Main Content --- */
 main {
     display: grid;
-    grid-template-columns: 3fr 1fr;
+    grid-template-columns: 3fr 1fr;  /*  Main content and sidebar */
     gap: 40px;
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px 40px;
 }
 
+.content-wrapper{
+  width: 100%;
+  background: var(--bg-color); /* Consistent background */
+  padding: 30px;  /*Consistent padding*/
+  margin-bottom: 30px; /*Consistent spacing*/
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
 .posts article {
-    background: #ffffff;
+    background: var(--bg-color);
     padding: 30px;
     margin-bottom: 30px;
-    border: 1px solid #eaeaea;
+    border: 1px solid var(--border-color);
     border-radius: 8px;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -104,56 +155,73 @@ main {
 
 .posts article h2 a {
     text-decoration: none;
-    color: #2c3e50;
+    color: var(--text-color);
     font-size: 1.8rem;
     font-weight: 700;
     transition: color 0.3s ease;
 }
 
 .posts article h2 a:hover {
-    color: #3498db;
+    color: var(--link-hover-color);
 }
 
 .posts article .post-meta {
     font-size: 0.9rem;
-    color: #7f8c8d;
+    color: #7f8c8d;  /*  A slightly muted gray */
     margin-bottom: 15px;
 }
 
 .posts article .post-meta a {
-    color: #3498db;
+    color: var(--link-color);
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
 .posts article .post-meta a:hover {
-    color: #2980b9;
+    color: var(--link-hover-color);
 }
 
+.read-more {
+    display: inline-block;
+    background-color: var(--button-bg-color);
+    color: var(--button-text-color);
+    padding: 10px 15px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    margin-top: 15px;
+}
+
+.read-more:hover {
+    background-color: var(--button-hover-bg-color);
+}
+
+/* --- Sidebar --- */
 aside {
-    background: #ffffff;
+    background: var(--aside-bg-color);
     padding: 25px;
-    border: 1px solid #eaeaea;
+    border: 1px solid var(--border-color);
     border-radius: 8px;
     position: sticky;
     top: 20px;
 }
+
 aside section {
     margin-bottom: 2rem;
 }
 
 aside h3 {
-    color: #2c3e50;
+    color: var(--text-color);
     font-size: 1.2rem;
     font-weight: 600;
     margin-bottom: 1rem;
     padding-bottom: 0.5rem;
-    border-bottom: 2px solid #eaeaea;
+    border-bottom: 2px solid var(--border-color);
 }
 
-aside ul{
-  list-style: none;
-  padding-left: 0;
+aside ul {
+    list-style: none;
+    padding-left: 0;
 }
 
 aside ul li {
@@ -162,101 +230,241 @@ aside ul li {
 
 aside a {
     text-decoration: none;
-    color: #2c3e50;
+    color: var(--text-color);
     transition: color 0.3s ease;
     font-size: 0.95rem;
 }
 
 aside a:hover {
-    color: #3498db;
+    color: var(--link-hover-color);
 }
 
+/* --- Footer --- */
 footer {
     text-align: center;
     padding: 30px;
-    background: #ffffff;
-    color: #2c3e50;
-    border-top: 1px solid #eaeaea;
+    background: var(--bg-color);
+    color: var(--text-color);
+    border-top: 1px solid var(--border-color);
 }
-/* Pagination Styles */
+
+/* --- Pagination --- */
 .pagination {
     display: flex;
     justify-content: center;
     margin: 2rem auto;
     list-style: none;
     width: 100%;
-    clear: both;
+    clear: both;  /* Important for layout */
     padding: 1rem 0;
-    border-top: 1px solid #eee;
+    border-top: 1px solid var(--border-color); /* Consistent borders */
 }
 
 .pagination a, .pagination span {
     padding: 8px 12px;
     margin: 0 5px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--border-color);
     text-decoration: none;
-    color: #333;
+    color: var(--text-color);
+    border-radius: 4px; /*  Rounded corners */
 }
 
-.pagination span { /* Current page */
-    background-color: #333;
-    color: #fff;
-    border-color: #333;
+.pagination span {
+    /* Current page */
+    background-color: var(--text-color);
+    color: var(--bg-color);
+    border-color: var(--text-color);
 }
 
 .pagination a:hover {
-    background-color: #eee;
+    background-color: var(--border-color);
 }
 
-/* Post Navigation Styles */
+/* --- Post Navigation --- */
 .post-navigation {
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
+    margin-bottom: 20px; /* Added bottom margin */
 }
 
 .post-navigation a {
     padding: 8px 12px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--border-color);
     text-decoration: none;
-    color: #333;
-}
-.post-navigation a:hover {
-    background-color: #eee;
+    color: var(--text-color);
+    border-radius: 4px;
 }
 
-/* Related Posts */
+.post-navigation a:hover {
+    background-color: var(--border-color);
+}
+
+
+/* --- Related Posts --- */
 .related-posts ul {
     list-style: none;
-    padding-left:0;
-}
-.related-posts ul li{
-    margin-bottom: 0.5rem;
-}
-.related-posts a {
-    text-decoration: none;
+    padding-left: 0;
 }
 
-/* Code Highlighting */
+.related-posts ul li {
+    margin-bottom: 0.5rem;
+}
+
+.related-posts a {
+    text-decoration: none;
+    color: var(--text-color);
+}
+.related-posts a:hover{
+    color: var(--link-color)
+}
+
+/* --- Code Highlighting --- */
 pre {
-    background-color: #f0f0f0;
-    padding: 10px;
+    background-color: var(--pre-bg-color);
+    padding: 1rem; /* More padding */
     overflow-x: auto;
-    border: 1px solid #ccc;
+    border: 1px solid var(--border-color);
     margin-bottom: 1rem;
+    border-radius: 4px; /* Rounded corners */
+    line-height: 1.5; /* Improved line height */
 }
 code {
     font-family: 'Courier New', Courier, monospace;
+     color: var(--pre-text-color);
 }
 
-/* Responsive Design */
+
+/* --- Image Styles --- */
+
+.post-image {
+    margin-bottom: 20px;
+    border-radius: 8px;
+    overflow: hidden; /* Ensures the image respects the border-radius */
+}
+
+.post-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;  /*  Maintain aspect ratio, cover the container */
+    max-height: 400px; /*  Limit height to prevent overly large images */
+}
+
+/* Images within post content - responsive and with rounded corners */
+.post-content img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 20px auto;
+    border-radius: 8px;
+}
+
+
+/* --- Tag Styles --- */
+.tag-link {
+    display: inline-block;
+    background-color: var(--tag-bg-color);
+    color: var(--tag-text-color);
+    padding: 2px 6px;
+    margin: 1px 2px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.9em;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.tag-link:hover {
+    background-color: var(--tag-hover-bg-color);
+    transform: translateY(-1px); /* Subtle hover effect */
+}
+
+.post-tags {
+    margin: 5px 0;
+}
+
+.tags ul {
+    list-style: none;
+    padding: 0;
+}
+
+.tags li {
+    margin: 3px 0;
+}
+
+.tags a {
+    display: flex; /* Use flexbox for alignment */
+    justify-content: space-between; /* Space between tag name and count */
+    align-items: center; /* Vertically center */
+    text-decoration: none;
+    color: var(--tag-text-color);
+    background-color: var(--tag-bg-color);
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.tags a span {
+    display: inline-block; /*  Make the span a block for padding */
+    background-color: var(--tag-count-bg-color);
+    color: var(--tag-count-text-color);
+    padding: 0 6px;
+    border-radius: 3px;
+    font-size: 0.85em;
+    margin-left: 8px; /*  Space between tag name and count */
+}
+
+.tags a:hover {
+    background-color: var(--tag-hover-bg-color);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+}
+
+/* Tag Cloud Styles (Moved from inline) */
+.tag-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.tag-item {
+    background-color: var(--tag-bg-color);
+    border-radius: 4px;
+    padding: 5px 10px;
+    text-decoration: none;
+    color: var(--tag-text-color);
+    font-size: 14px;
+    transition: background-color 0.2s;
+}
+
+.tag-item:hover {
+    background-color: var(--tag-hover-bg-color);
+}
+
+.tag-count {
+    background-color: var(--tag-count-bg-color);
+    border-radius: 3px;
+    padding: 2px 6px;
+    margin-left: 5px;
+    font-size: 12px;
+    color: var(--tag-count-text-color);
+}
+
+
+/* --- Responsive --- */
 /* Mobile First */
 @media (max-width: 768px) {
     main {
         grid-template-columns: 1fr; /* Stack main content and sidebar */
     }
-    aside{
-      margin-top: 1rem;
+    aside {
+        margin-top: 1rem;
+    }
+     .post-image img {
+      max-height: none; /* Allow image to take needed height on mobile */
     }
 }
 
@@ -269,74 +477,95 @@ code {
     }
 }
 
-/* Dark/Light Theme */
-body.dark-theme {
-    background-color: #333;
-    color: #eee;
-}
-
-body.dark-theme header {
-    background-color: #222;
-    color: #fff;
-}
-
-body.dark-theme .posts article {
-    background-color: #444;
-    border-color: #555;
-    color:#eee;
-}
-body.dark-theme .posts article h2 a{
-     color:#eee
-}
-
-body.dark-theme aside {
-    background-color: #444;
-    border-color: #555;
-    color:#eee;
-}
-body.dark-theme aside a{
-     color:#eee
-}
-body.dark-theme .pagination a, body.dark-theme .pagination span{
-    border-color: #555;
-    color: #eee;
-}
-
-body.dark-theme .pagination span {
-    background-color: #eee;
-    color: #333;
-    border-color: #eee;
-}
-body.dark-theme footer {
-    background: #222;
-}
-
-body.dark-theme pre{
-    background-color: #282a36;
-    color:#f8f8f2;
-}
-body.dark-theme code{
-    color:#f8f8f2;
-}
+/* --- Theme Toggle Button --- */
 
 #theme-toggle{
     background-color: transparent;
-    border: 1px solid #2c3e50;
-    color: #2c3e50;
+    border: 1px solid var(--text-color);
+    color: var(--text-color);
     padding: 0.5rem;
     cursor: pointer;
     border-radius: 4px;
     transition: all 0.3s ease;
 }
-body.dark-theme #theme-toggle{
-    border-color: #eee;
-    color: #eee;
-}
+
 #theme-toggle:hover {
-    background-color: #2c3e50;
-    color: #fff;
+    background-color: var(--text-color);
+    color: var(--bg-color);
 }
-body.dark-theme #theme-toggle:hover {
-    background-color: #eee;
-    color: #333;
+
+/* --- Post-Specific Styles --- */
+
+.post-header {
+    margin-bottom: 20px;
 }
+
+.post-title {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    color: var(--post-title-color); /* Use post-specific variable */
+}
+
+.post-meta,
+.post-tags {
+    font-size: 0.9em;
+    color: var(--post-meta-color);
+    margin-bottom: 10px;
+}
+
+.post-categories a,
+.post-tags a {
+    color: var(--link-color);
+    text-decoration: none;
+    margin-right: 5px;
+}
+
+.post-categories a:hover,
+.post-tags a:hover {
+    color: var(--link-hover-color);
+}
+
+.post-content {
+    font-size: 1.1em;
+    line-height: 1.7;
+    margin-bottom: 30px;
+    padding: 0 30px;
+}
+
+/* Styles for the main post body content */
+.post-body {
+    margin-top: 20px;
+}
+
+.post-body p {
+    margin-bottom: 1em; /* Spacing between paragraphs */
+    color: var(--post-body-text-color);
+}
+
+.post-body a {
+    color: var(--post-body-link-color);
+    text-decoration: underline;
+}
+.post-body a:hover{
+   color: var(--post-body-link-hover-color);
+}
+
+/* Style headings within the post body */
+.post-body h1,
+.post-body h2,
+.post-body h3,
+.post-body h4,
+.post-body h5,
+.post-body h6 {
+    margin-top: 1.5em;
+    margin-bottom: 0.75em;
+    color: var(--post-title-color); /* Consistent with post title */
+    line-height: 1.3;
+}
+
+.post-body h1 { font-size: 2em; }
+.post-body h2 { font-size: 1.75em; }
+.post-body h3 { font-size: 1.5em; }
+.post-body h4 { font-size: 1.25em; }
+.post-body h5 { font-size: 1.1em; }
+.post-body h6 { font-size: 1em; }
