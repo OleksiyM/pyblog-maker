@@ -59,52 +59,52 @@ The generated blog will be available in the `my-blog-name/dist` directory.
 
 ### Core Features
 - [ ] Full GitHub Markdown format support
-  - Tables with alignment
-  - Task lists
-  - Footnotes
-  - Emoji support
-  - Auto-linking references
+  - [ ] Tables with alignment
+  - [ ] Task lists
+  - [ ] Footnotes
+  - [ ] Emoji support
+  - [ ] Auto-linking references
 - [ ] YAML configuration for blogs
-  - Global blog settings
-  - Theme configuration
-  - Build options
-  - Custom plugins support
+  - [ ] Global blog settings
+  - [ ] Theme configuration
+  - [ ] Build options
+  - [ ] Custom plugins support
 - [ ] Automatic blog creation with default theme
-  - Scaffolding tool for new blogs
-  - Sample content generation
-  - Configuration wizard
+  - [ ] Scaffolding tool for new blogs
+  - [ ] Sample content generation
+  - [ ] Configuration wizard
 
 ### Theme Improvements
 - [ ] Enhanced default theme
-  - Modern, minimalist design
-  - Dark mode support
-  - Improved typography
-  - Better mobile experience
+  - [ ] Modern, minimalist design
+  - [x] Dark mode support
+  - [ ] Improved typography
+  - [ ] Better mobile experience
 - [ ] Theme development tools
-  - Theme hot-reloading
-  - Theme documentation
-  - Component library
+  - [ ] Theme hot-reloading
+  - [ ] Theme documentation
+  - [ ] Component library
 
 ### Performance Optimizations
 - [ ] Asset minification
-  - CSS/JS minification
-  - HTML compression
-  - Selective bundling
+  - [ ] CSS/JS minification
+  - [ ] HTML compression
+  - [ ] Selective bundling
 - [ ] Image optimization
-  - Automatic image compression
-  - Responsive images
-  - WebP conversion
-  - Lazy loading
+  - [ ] Automatic image compression
+  - [ ] Responsive images
+  - [ ] WebP conversion
+  - [ ] Lazy loading
 
 ### Future Enhancements
-- [ ] Multi-language support
-- [ ] Comment system integration
-- [ ] Search functionality
-- [ ] Social media integration
-- [ ] Custom shortcodes
-- [ ] Draft preview system
-- [ ] Incremental builds
-- [ ] Plugin system
+- [ ] Multi-language support 🤔
+- [ ] Comment system integration ❓❔❓❔
+- [ ] Search functionality 🤔
+- [ ] Social media integration 🤔
+- [ ] Custom shortcodes 🤔
+- [ ] Draft preview system ❓❔❓❔
+- [ ] Incremental builds 🤔
+- [ ] Plugin system ❓❔❓❔
 
 ## License
 
