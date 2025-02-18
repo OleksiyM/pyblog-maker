@@ -1,9 +1,10 @@
+# src/bloggen.py
 import os
 import re
 import sys
 import shutil
 import markdown
-import datetime
+import datetime  # Ensure datetime is imported
 import zipfile
 import argparse
 from jinja2 import Environment, FileSystemLoader
@@ -57,7 +58,7 @@ def load_markdown_post(filepath: str) -> Dict:
     try:
         metadata['date'] = datetime.datetime.strptime(metadata['date'], '%Y-%m-%d')
     except ValueError:
-        raise ValueError(f"Invalid date format in {filepath}. Use YYYY-MM-DD.")
+        raise ValueError(f"Invalid date format in {filepath}.  Use YYYY-MM-DD.")
 
     metadata['draft'] = metadata.get('draft', 'false').lower() == 'true'
     
@@ -97,12 +98,13 @@ def load_markdown_post(filepath: str) -> Dict:
 
 def generate_post_url(post: Dict) -> str:
     """Generates the URL for a post."""
-    date_str = post['date'].strftime("%Y-%m-%d")
+    date_str = post['date'].strftime("%Y-%m-%d_%H-%M-%S")
     title = post.get('title', '').lower().replace(" ", "-")
-    title = re.sub(r'[^\w-]', '', title)
+    title = re.sub(r'[^\w-]', '', title)  # Remove special characters
 
     if 'filename' in post:
-        return f"posts/{post['filename']}.html"
+         # Use filename but prepend the date for uniqueness in the "posts" directory
+        return f"posts/{date_str}-{post['filename']}.html"
     else:
         return f"posts/{date_str}-{title}.html"
 
@@ -127,7 +129,7 @@ def render_template(template_name: str, context: Dict, output_dir: str, output_f
         'generate_post_url': generate_post_url,
         'generate_category_url': generate_category_url,
         'generate_tag_url': generate_tag_url,
-        'current_year': datetime.datetime.now().year  # Add current year
+        'now': datetime.datetime.now,  # Use now() directly
     })
 
     template = env.get_template(template_name)
@@ -158,6 +160,7 @@ def create_build_report(posts: List[Dict], output_dir: str, build_time: float, c
 
     with open(os.path.join(output_dir, "build_report.txt"), 'w', encoding='utf-8') as f:
         f.write(report_str)
+    print(f"\nBuild report saved to: {os.path.join(output_dir, 'build_report.txt')}")
 
 
 
@@ -196,7 +199,11 @@ def generate_static_pages(posts: List[Dict], output_dir: str, categories: Dict, 
             'posts': category_posts,
             'SITE_URL': SITE_URL,
             'num_pages': 1,  # Add this line
-            'current_page': 1  # Add this line
+            'current_page': 1,  # Add this line
+            # Add recent posts, all categories, and tags for the sidebar
+            'recent_posts': posts[:RECENT_POSTS_COUNT],
+            'categories': sorted(categories.items(), key=lambda item: len(item[1]), reverse=True)[:TOP_CATEGORIES_COUNT],
+            'tags': sorted(tags.items(), key=lambda item: len(item[1]), reverse=True),
         }
         render_template('main.html', context, output_dir, generate_category_url(category) + "index.html", blog_name)
 
@@ -208,7 +215,11 @@ def generate_static_pages(posts: List[Dict], output_dir: str, categories: Dict, 
             'posts': tag_posts,
             'SITE_URL': SITE_URL,
             'num_pages': 1,  # Add this line
-            'current_page': 1  # Add this line
+            'current_page': 1,   # Add this line
+             # Add recent posts, all categories, and tags for the sidebar
+            'recent_posts': posts[:RECENT_POSTS_COUNT],
+            'categories': sorted(categories.items(), key=lambda item: len(item[1]), reverse=True)[:TOP_CATEGORIES_COUNT],
+            'tags': sorted(tags.items(), key=lambda item: len(item[1]), reverse=True),
         }
         render_template('main.html', context, output_dir, generate_tag_url(tag) + "index.html", blog_name)
 
@@ -391,15 +402,19 @@ def main():
     timestamp = datetime.datetime.now().strftime(OUTPUT_DIR_FORMAT)
     output_dir = os.path.join(output_dir_base, timestamp)
     os.makedirs(output_dir, exist_ok=True)
+    # Prepare common context for post pages (including sidebar data)
 
     for post in posts:
-         context = {
-             'post': post,
-             'blog_title': post['title'],
-             'SITE_URL': SITE_URL
-         }
-         output_filename = generate_post_url(post)
-         render_template('post.html', context, output_dir, output_filename, blog_name)
+        context = {
+            'post': post,
+            'blog_title': post['title'],
+            'SITE_URL': SITE_URL,
+            'recent_posts': posts[:RECENT_POSTS_COUNT],
+            'categories': sorted(categories.items(), key=lambda item: len(item[1]), reverse=True)[:TOP_CATEGORIES_COUNT],
+            'tags': sorted(tags.items(), key=lambda item: len(item[1]), reverse=True),
+        }
+        output_filename = generate_post_url(post)
+        render_template('post.html', context, output_dir, output_filename, blog_name)
 
     generate_static_pages(posts, output_dir, categories, tags, blog_name)
     copy_static_assets(output_dir, blog_name)
