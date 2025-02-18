@@ -7,37 +7,37 @@
             <article>
              {% if post.image %}
              <div class="post-image">
-                 <img src="./images/{{ post.image }}" alt="{{ post.title }}">
+                 <img src="{{ SITE_URL }}/images/{{ post.image }}" alt="{{ post.title }}">
              </div>
              {% endif %}
-             <h2><a href="./{{ generate_post_url(post) }}">{{ post.title }}</a></h2>
+             <h2><a href="{{ SITE_URL }}/{{ generate_post_url(post) }}">{{ post.title }}</a></h2>
              <p class="post-meta">
                  Published on: {{ post.date.strftime('%Y-%m-%d') }} |
                  Categories: {% for category in post.categories %}
-                 <a href="./{{ generate_category_url(category) }}">{{ category }}</a>{% if not loop.last %}, {% endif %}
+                 <a href="{{ SITE_URL }}/{{ generate_category_url(category) }}">{{ category }}</a>{% if not loop.last %}, {% endif %}
                 {% endfor %}
              </p>
               <p>{{ post.description }}</p>
-             <a href="./{{ generate_post_url(post) }}" class="read-more">Read More</a>
+             <a href="{{ SITE_URL }}/{{ generate_post_url(post) }}" class="read-more">Read More</a>
         </article>
         {% endfor %}
 
         {% if num_pages > 1 %}
         <nav class="pagination">
           {% if current_page > 1 %}
-          <a href="{% if current_page == 2 %}./{% else %}./page{{ current_page - 1 }}.html{% endif %}">Previous</a>
+          <a href="{% if current_page == 2 %}{{ SITE_URL }}/{% else %}{{ SITE_URL }}/page{{ current_page - 1 }}.html{% endif %}">Previous</a>
           {% endif %}
 
           {% for page_num in range(1, num_pages + 1) %}
              {% if page_num == current_page %}
                  <span>{{ page_num }}</span>
              {% else %}
-                  <a href="{% if page_num == 1 %}./{% else %}./page{{ page_num }}.html{% endif %}">{{ page_num }}</a>
+                  <a href="{% if page_num == 1 %}{{ SITE_URL }}/{% else %}{{ SITE_URL }}/page{{ page_num }}.html{% endif %}">{{ page_num }}</a>
              {% endif %}
           {% endfor %}
 
           {% if current_page < num_pages %}
-            <a href="./page{{ current_page + 1 }}.html">Next</a>
+            <a href="{{ SITE_URL }}/page{{ current_page + 1 }}.html">Next</a>
           {% endif %}
         </nav>
         {% endif %}
@@ -49,7 +49,7 @@
            <h3>Recent Posts</h3>
             <ul>
             {% for post in recent_posts %}
-               <li><a href="./{{ generate_post_url(post) }}">{{ post.title }}</a></li>
+               <li><a href="{{ SITE_URL }}/{{ generate_post_url(post) }}">{{ post.title }}</a></li>
             {% endfor %}
            </ul>
         </section>
@@ -57,18 +57,18 @@
            <h3>Categories</h3>
            <ul>
            {% for category, posts in categories %}
-              <li><a href="./{{ generate_category_url(category) }}">{{ category }} ({{ posts|length }})</a></li>
+              <li><a href="{{ SITE_URL }}/{{ generate_category_url(category) }}">{{ category }} ({{ posts|length }})</a></li>
            {% endfor %}
             </ul>
         </section>
-        
+
         <section class="tags">
            <h3>Tags</h3>
-            <ul>
+            <div class="tag-grid">
             {% for tag, posts in tags %}
-               <li><a href="./{{ generate_tag_url(tag) }}">{{ tag }} ({{posts|length}})</a></li>
+               <a href="{{ SITE_URL }}/{{ generate_tag_url(tag) }}" class="tag-item">{{ tag }} <span class="tag-count">{{posts|length}}</span></a>
             {% endfor %}
-            </ul>
+            </div>
        </section>
 
     </aside>
